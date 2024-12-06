@@ -2,6 +2,7 @@ import 'package:bhagavat_geeta/model/model.dart';
 import 'package:bhagavat_geeta/screen/homescreen/view/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Verses extends StatefulWidget {
   const Verses({super.key});
@@ -71,6 +72,20 @@ class _VersesState extends State<Verses> {
               ),
             );
           },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
+        onPressed: () {
+          Share.share(
+            homeProviderW.isHindi
+                ? '${homeProviderW.selectVerseList[ind].transliteration}'
+                : '${homeProviderW.selectVerseList[ind].text}',
+          );
+        },
+        child: const Icon(
+          Icons.ios_share,
+          color: Colors.white,
         ),
       ),
     );
