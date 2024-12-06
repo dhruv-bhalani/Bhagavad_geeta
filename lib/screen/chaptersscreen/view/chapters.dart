@@ -81,11 +81,11 @@ class _ChaptersState extends State<Chapters> {
               height: 20,
             ),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'संक्षेपः',
+                homeProviderW.isHindi ? 'summary' : 'संक्षेपः',
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
             ),
@@ -113,12 +113,13 @@ class _ChaptersState extends State<Chapters> {
               height: 20,
             ),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'श्लोक',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                homeProviderR.isHindi ? 'Verses' : 'श्लोक',
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
             ),
           ),
