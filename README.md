@@ -12,8 +12,12 @@ This app also features chapter-wise browsing, text-to-speech functionality for l
 - Image Integration: Includes relevant images to enhance user experience.
 - Localization: Supports multiple languages for a diverse user base.
 - Smooth Navigation: Carousel slider and dots indicator for better user experience.
+# Video
 
-Screenshot:-
+https://github.com/user-attachments/assets/4c9d4b64-d16c-43f7-8c67-fb0706075167
+
+
+# Screenshot:-
 
 <img src = "https://github.com/user-attachments/assets/67acf689-6f49-4ba4-979b-1635ff11cc07" width="200">
 <img src = "https://github.com/user-attachments/assets/66958c73-ceca-4041-aff1-1905b1865dbc" width="200">
