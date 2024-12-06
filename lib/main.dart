@@ -1,6 +1,6 @@
 import 'package:bhagavat_geeta/routes/routes.dart';
 import 'package:bhagavat_geeta/screen/homescreen/view/home_provider.dart';
-import 'package:bhagavat_geeta/screen/settingscreen/view/settingprovider.dart';
+import 'package:bhagavat_geeta/screen/settingscreen/view/setting_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,18 +15,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => HomeProvider()),
-        ChangeNotifierProvider(create: (context) => SettingProvider()),
+        ChangeNotifierProvider.value(value: HomeProvider()..checkTheme()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          appBarTheme: const AppBarTheme(
-            color: Colors.deepOrangeAccent,
+      child: Consumer<HomeProvider>(builder: (context, value, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData.light().copyWith(
+            appBarTheme: const AppBarTheme(color: Color(0xffe9ae1f)),
           ),
-        ),
-        routes: Routes().allRoutes,
-      ),
+          darkTheme: ThemeData.dark().copyWith(
+            appBarTheme: const AppBarTheme(color: Color(0xffe9ae1f)),
+          ),
+          themeMode: (value.isdarkmode)
+              ? ThemeMode.dark
+              : value.isdarkmode
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
+          routes: Routes().allRoutes,
+        );
+      }),
     );
   }
 }

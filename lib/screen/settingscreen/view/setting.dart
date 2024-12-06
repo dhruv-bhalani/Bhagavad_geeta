@@ -1,4 +1,5 @@
-import 'package:bhagavat_geeta/screen/settingscreen/view/settingprovider.dart';
+import 'package:bhagavat_geeta/screen/homescreen/view/home_provider.dart';
+import 'package:bhagavat_geeta/screen/settingscreen/view/setting_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,43 +11,57 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  late SettingProvider settingProviderR;
-  late SettingProvider settingProviderW;
+  late HomeProvider homeProviderR;
+  late HomeProvider homeProviderW;
+
   @override
   Widget build(BuildContext context) {
-    settingProviderR = context.read<SettingProvider>();
-    settingProviderW = context.watch<SettingProvider>();
+    homeProviderR = context.read<HomeProvider>();
+    homeProviderW = context.watch<HomeProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          homeProviderW.isHindi ? 'Settings' : 'सेटिंग्स',
+          style: const TextStyle(fontSize: 20, color: Colors.black),
+        ),
       ),
       body: Column(
         children: [
-          ListTile(
-            title: const Text('English'),
-            leading: Radio(
-              value: false,
-              groupValue: true,
-              onChanged: (value) {},
+          RadioMenuButton(
+            value: true,
+            groupValue: homeProviderW.isHindi,
+            onChanged: (val) {
+              homeProviderW.getHindi(homeProviderW.isHindi);
+            },
+            child: const Text(
+              'English',
             ),
           ),
-          ListTile(
-            title: const Text('Hindi'),
-            leading: Radio(
-                value: settingProviderR.languagechenge,
-                groupValue: true,
-                onChanged: (value) {}),
-          ),
-          ListTile(
-            title: const Text('Sanskrit'),
-            leading: Radio(
-                value: settingProviderR.languagechenge,
-                groupValue: true,
-                onChanged: (value) {}),
+          RadioMenuButton(
+            value: false,
+            groupValue: homeProviderW.isHindi,
+            onChanged: (val) {
+              homeProviderW.isHindi = true;
+              homeProviderR.getHindi(homeProviderW.isHindi);
+            },
+            child: const Text(
+              'Hindi',
+            ),
           ),
           Switch(
-            value: settingProviderR.languagechenge,
-            onChanged: (value) {},
+            value: homeProviderW.isdarkmode,
+            onChanged: (value) {
+              context.read<HomeProvider>().changeTheme(value);
+            },
           )
         ],
       ),

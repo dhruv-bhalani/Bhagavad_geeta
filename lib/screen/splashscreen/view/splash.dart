@@ -35,7 +35,6 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
         child: Center(
           child: Container(
             height: 300,

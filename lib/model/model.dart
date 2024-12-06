@@ -31,9 +31,10 @@ class BhagavatGeetaModel {
       word_meanings: json['word_meanings'],
     );
   }
+  //Returns current class objects
 }
 
-class BhagavatGeetachaptersModel1 {
+class BhagavatGeetachaptersModel {
   int? id, chapter_number, verses_count;
   String? chapter_summary,
       chapter_summary_hindi,
@@ -44,7 +45,7 @@ class BhagavatGeetachaptersModel1 {
       name_translation,
       name_transliterated;
 
-  BhagavatGeetachaptersModel1({
+  BhagavatGeetachaptersModel({
     this.id,
     this.chapter_number,
     this.verses_count,
@@ -57,8 +58,8 @@ class BhagavatGeetachaptersModel1 {
     this.name_translation,
     this.name_transliterated,
   });
-  factory BhagavatGeetachaptersModel1.fromJson(Map json) {
-    return BhagavatGeetachaptersModel1(
+  factory BhagavatGeetachaptersModel.fromJson(Map json) {
+    return BhagavatGeetachaptersModel(
       id: json['id'],
       chapter_number: json['chapter_number'],
       verses_count: json['verses_count'],
