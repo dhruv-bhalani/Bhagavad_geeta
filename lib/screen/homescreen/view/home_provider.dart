@@ -1,13 +1,14 @@
 import 'package:bhagavat_geeta/helper/helper.dart';
-import 'package:bhagavat_geeta/model/model.dart';
+import 'package:bhagavat_geeta/model/chaptermodel.dart';
+import 'package:bhagavat_geeta/model/versesmodel.dart';
 import 'package:bhagavat_geeta/utils/shrHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class HomeProvider extends ChangeNotifier {
-  List<BhagavatGeetaModel> bhagavatgeeta = [];
-  List<BhagavatGeetaModel> selectVerseList = [];
-  List<BhagavatGeetachaptersModel> chapter = [];
+  List<VersesModel> bhagavadGeeta = [];
+  List<VersesModel> selectVerseList = [];
+  List<ChapterModel> chapter = [];
   FlutterTts tts = FlutterTts();
   List<List> images = [
     [
@@ -102,13 +103,19 @@ class HomeProvider extends ChangeNotifier {
     ],
   ];
   bool isHindi = false;
+  int languageIndex = 1;
+  bool languagechenge = false;
+  bool isdarkmode = false;
+
+  void getLanguageIndex(int index) {
+    languageIndex = index;
+    notifyListeners();
+  }
+
   void getHindi(bool val) {
     isHindi = !isHindi;
     notifyListeners();
   }
-
-  bool languagechenge = false;
-  bool isdarkmode = false;
 
   void changeTheme(bool val) {
     isdarkmode = val;
@@ -124,12 +131,12 @@ class HomeProvider extends ChangeNotifier {
 
   Future<void> getbhagavatjson() async {
     Helper helper = Helper();
-    bhagavatgeeta = await helper.json();
+    bhagavadGeeta = await helper.json();
     notifyListeners();
   }
 
   void selectVerse(int index) {
-    selectVerseList = bhagavatgeeta
+    selectVerseList = bhagavadGeeta
         .where((element) => element.chapter_number == index)
         .toList();
     notifyListeners();
@@ -143,9 +150,15 @@ class HomeProvider extends ChangeNotifier {
 
   void speak(String text) async {
     await tts.speak(text);
+    tts.clearVoice();
   }
 
   void pause() async {
     await tts.pause();
+  }
+
+  void changeSelectedLanguage(int index) {
+    languageIndex = index;
+    notifyListeners();
   }
 }

@@ -1,6 +1,5 @@
 import 'package:bhagavat_geeta/routes/routes.dart';
 import 'package:bhagavat_geeta/screen/homescreen/view/home_provider.dart';
-import 'package:bhagavat_geeta/screen/settingscreen/view/setting_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,10 +20,10 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData.light().copyWith(
-            appBarTheme: const AppBarTheme(color: Color(0xffe9ae1f)),
+            appBarTheme: const AppBarTheme(color: Color(0xfff67f21)),
           ),
           darkTheme: ThemeData.dark().copyWith(
-            appBarTheme: const AppBarTheme(color: Color(0xffe9ae1f)),
+            appBarTheme: const AppBarTheme(color: Color(0xfff67f21)),
           ),
           themeMode: (value.isdarkmode)
               ? ThemeMode.dark

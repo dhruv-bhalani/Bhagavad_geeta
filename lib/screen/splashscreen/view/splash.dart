@@ -34,16 +34,15 @@ class _SplashState extends State<Splash> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Center(
-          child: Container(
-            height: 300,
-            width: 300,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/1.png'),
-                fit: BoxFit.cover,
-              ),
+      body: Center(
+        child: Container(
+          height: 300,
+          width: 300,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            image: const DecorationImage(
+              image: AssetImage('assets/images/logo2.png'),
+              fit: BoxFit.cover,
             ),
           ),
         ),

@@ -1,4 +1,4 @@
-import 'package:bhagavat_geeta/model/model.dart';
+import 'package:bhagavat_geeta/model/versesmodel.dart';
 import 'package:bhagavat_geeta/screen/homescreen/view/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +19,14 @@ class _VersesState extends State<Verses> {
     homeProviderR = context.read<HomeProvider>();
     homeProviderW = context.watch<HomeProvider>();
     int ind = ModalRoute.of(context)!.settings.arguments as int;
+    final verse = homeProviderW.languageIndex == 4
+        ? "श्लोक"
+        : homeProviderW.languageIndex == 2
+            ? "श्लोक"
+            : homeProviderW.languageIndex == 1
+                ? "Verse"
+                : "શ્લોક";
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -31,18 +39,7 @@ class _VersesState extends State<Verses> {
             homeProviderR.tts.pause();
           },
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                homeProviderW
-                    .speak("${homeProviderW.selectVerseList[ind].text}");
-              },
-              icon: const Icon(
-                Icons.volume_up,
-                color: Colors.black,
-              ))
-        ],
-        title: Text(homeProviderR.isHindi ? 'Verse' : 'श्लोक',
+        title: Text(verse,
             style: const TextStyle(color: Colors.black, fontSize: 25)),
       ),
       body: Padding(
@@ -53,39 +50,82 @@ class _VersesState extends State<Verses> {
           ),
           itemCount: homeProviderW.selectVerseList.length,
           itemBuilder: (context, index) {
-            return Center(
-              child: Stack(
-                children: [
-                  Image.asset('assets/images/5.png'),
-                  Center(
-                    child: Text(
-                      homeProviderW.isHindi
-                          ? '${homeProviderW.selectVerseList[index].transliteration}'
-                          : '${homeProviderW.selectVerseList[index].text}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
+            final text = context.watch<HomeProvider>().languageIndex == 4
+                ? context
+                    .watch<HomeProvider>()
+                    .selectVerseList[index]
+                    .textModel!
+                    .sanskrit
+                : context.watch<HomeProvider>().languageIndex == 2
+                    ? context
+                        .watch<HomeProvider>()
+                        .selectVerseList[index]
+                        .textModel!
+                        .hindi
+                    : context.watch<HomeProvider>().languageIndex == 1
+                        ? context
+                            .watch<HomeProvider>()
+                            .selectVerseList[index]
+                            .textModel!
+                            .english
+                        : context
+                            .watch<HomeProvider>()
+                            .selectVerseList[index]
+                            .textModel!
+                            .gujarati;
+            return Stack(
+              // alignment: Alignment.center,
+              children: [
+                Image.asset('assets/images/5.png'),
+                Align(
+                  alignment: const Alignment(0.5, 0.3),
+                  child: Text(
+                    "$text",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
-                ],
-              ),
+                ),
+                Align(
+                  alignment: const Alignment(1.0, 0.7),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          homeProviderW.speak("$text");
+                        },
+                        icon: homeProviderW.isdarkmode
+                            ? const Icon(
+                                Icons.volume_up,
+                                color: Colors.white,
+                              )
+                            : const Icon(
+                                Icons.volume_up,
+                                color: Colors.black,
+                              ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Share.share("$text");
+                        },
+                        icon: homeProviderW.isdarkmode
+                            ? const Icon(
+                                Icons.share,
+                                color: Colors.white,
+                              )
+                            : const Icon(
+                                Icons.share,
+                                color: Colors.black,
+                              ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             );
           },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
-        onPressed: () {
-          Share.share(
-            homeProviderW.isHindi
-                ? '${homeProviderW.selectVerseList[ind].transliteration}'
-                : '${homeProviderW.selectVerseList[ind].text}',
-          );
-        },
-        child: const Icon(
-          Icons.ios_share,
-          color: Colors.white,
         ),
       ),
     );
